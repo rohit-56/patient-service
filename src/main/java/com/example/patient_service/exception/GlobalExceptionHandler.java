@@ -12,11 +12,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
 
   @ExceptionHandler(MethodArgumentNotValidException.class)
-  public ResponseEntity<Map<String,String>> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+  public ResponseEntity<Map<String, String>> handleMethodArgumentNotValidException(
+      MethodArgumentNotValidException ex) {
     Map<String, String> errors = new HashMap<>();
-    ex.getBindingResult().getAllErrors().forEach((error) -> {
-      errors.put(error.getObjectName(), error.getDefaultMessage());
-    });
+    ex.getBindingResult()
+        .getAllErrors()
+        .forEach(
+            (error) -> {
+              errors.put(error.getObjectName(), error.getDefaultMessage());
+            });
     return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
   }
 
@@ -28,5 +32,4 @@ public class GlobalExceptionHandler {
     errors.put("message", "Email Already Exist");
     return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
   }
-
 }

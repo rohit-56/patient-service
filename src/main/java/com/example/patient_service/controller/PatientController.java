@@ -3,11 +3,9 @@ package com.example.patient_service.controller;
 import com.example.patient_service.dto.PatientRequest;
 import com.example.patient_service.dto.PatientResponse;
 import com.example.patient_service.service.impl.PatientServiceImpl;
+import jakarta.validation.groups.Default;
 import java.util.List;
 import java.util.UUID;
-
-import jakarta.validation.Valid;
-import jakarta.validation.groups.Default;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -36,7 +34,8 @@ public class PatientController {
   }
 
   @PostMapping("/create")
-  public ResponseEntity<PatientResponse> createPatient(@Validated({Default.class}) @RequestBody PatientRequest patientRequest) {
+  public ResponseEntity<PatientResponse> createPatient(
+      @Validated({Default.class}) @RequestBody PatientRequest patientRequest) {
     PatientResponse patientResponse = patientService.createPatient(patientRequest);
     return new ResponseEntity<>(patientResponse, HttpStatus.CREATED);
   }
